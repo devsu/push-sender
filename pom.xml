@@ -7,6 +7,29 @@
 	<artifactId>push-sender</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
+	<name>Push Sender</name>
+	<description>Push Sender is a library that allows you to quickly send push messages via APNS or GCM, on your Java powered servers.</description>
+	<url>https://github.com/devsu/push-sender</url>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>rion18</id>
+			<name>Alvaro López</name>
+			<email>rion18@hotmail.com</email>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>https://github.com/devsu/push-sender.git</connection>
+		<developerConnection>https://github.com/devsu/push-sender.git</developerConnection>
+		<url>https://github.com/devsu/push-sender</url>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,4 +77,5 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
+
 </project>
