@@ -1,0 +1,5 @@
+This file contains a list of people who have made contributions to Push Sender.
+
+Primary authors:
+
+Alvaro López <rion18@hotmail.com>
