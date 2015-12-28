@@ -1,6 +1,6 @@
 # Push Sender #
 
-Push Sender is a Java library that allows sending push messages easily, based on the awesome libraries [gcm-server](https://github.com/theganyo/gcm-server) by [theganyo](https://github.com/theganyo) and (java-apns)[https://github.com/notnoop/java-apns] by (notnoop)[https://github.com/notnoop]. Send push messages with one line of code, forget about the rest, and focus on making on your application's business logic!
+Push Sender is a Java library that allows sending push messages easily, based on the awesome libraries [gcm-server](https://github.com/theganyo/gcm-server) by [theganyo](https://github.com/theganyo) and [java-apns](https://github.com/notnoop/java-apns) by [notnoop](https://github.com/notnoop). Send push messages with one line of code, forget about the rest, and focus on making on your application's business logic!
 
 ## Overview ###
 
@@ -78,6 +78,10 @@ public class MySender {
 	...
 }
 ```
+
+## Customizing ###
++ You can customize any data sent on your push message with a `Map<String, String>` that contains any key-value pair you want to send.
++ You can customize settings like max retries, collapse keys, production/sandbox environments, bulk size when sending simultaneous push messages on Android and more... 
 
 ## Authors ##
 Feel free to contact Alvaro López at rion18@hotmail.com!
