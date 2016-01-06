@@ -5,7 +5,7 @@
 
 	<groupId>com.devsu</groupId>
 	<artifactId>push-sender</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 	<name>Push Sender</name>
 	<description>Push Sender is a library that allows you to quickly send push messages via APNS or GCM, on your Java powered servers.</description>
