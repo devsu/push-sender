@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import com.notnoop.apns.APNS;
 import com.notnoop.apns.ApnsService;
 import com.notnoop.apns.PayloadBuilder;
+import com.notnoop.exceptions.InvalidSSLConfig;
+import com.notnoop.exceptions.RuntimeIOException;
 
 
 public class SyncApplePushService extends SyncPushServiceBase {
@@ -28,8 +30,10 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	 * @param certificatePath The path of the p12 certificate file.
 	 * @param certificatePassword The password for the p12 certificate.
 	 * @param useProductionServer Indicates if the services uses a Production environment or a Sandbox environment.
+	 * @throws RuntimeIOException
+	 * @throws InvalidSSLConfig
 	 */
-	public SyncApplePushService(String certificatePath, String certificatePassword, boolean useProductionServer) {
+	public SyncApplePushService(String certificatePath, String certificatePassword, boolean useProductionServer) throws RuntimeIOException, InvalidSSLConfig {
 		setDefaultValues();
 		if (useProductionServer) {
 			setupProductionServer(certificatePath, certificatePassword);
@@ -101,8 +105,10 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	 * Sets up the APNS Sandbox environment.
 	 * @param certificatePath The path of the p12 certificate file.
 	 * @param certificatePassword The password for the p12 certificate.
+	 * @throws RuntimeIOException
+	 * @throws InvalidSSLConfig
 	 */
-	public void setupDevelopmentServer(String certificatePath, String certificatePassword) {
+	public void setupDevelopmentServer(String certificatePath, String certificatePassword) throws RuntimeIOException, InvalidSSLConfig {
 		apnsService = APNS.newService().withCert(certificatePath, certificatePassword).withSandboxDestination().build();
 		apnsService.stop();
 	}
@@ -111,8 +117,10 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	 * Sets up the APNS Production environment.
 	 * @param certificatePath The path of the p12 certificate file.
 	 * @param certificatePassword The password for the p12 certificate.
+	 * @throws RuntimeIOException
+	 * @throws InvalidSSLConfig
 	 */
-	public void setupProductionServer(String certificatePath, String certificatePassword) {
+	public void setupProductionServer(String certificatePath, String certificatePassword) throws RuntimeIOException, InvalidSSLConfig {
 		apnsService = APNS.newService().withCert(certificatePath, certificatePassword).withProductionDestination().build();
 		apnsService.stop();
 	}
