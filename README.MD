@@ -10,7 +10,7 @@ Using Push Sender is very simple. You can import Push Sender on your POM file us
 	<dependency>
 		<groupId>com.devsu</groupId>
 		<artifactId>push-sender</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 	</dependency>
 ```
 

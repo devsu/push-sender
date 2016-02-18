@@ -12,3 +12,8 @@ First release of the GCM Push Client.
 ## [1.0.1](https://github.com/devsu/push-sender/releases/tag/1.0.1) (2016-01-06)
 
 + Added RuntimeIOException and InvalidSSLConfig on APNS Service.
+
+## [1.0.2](https://github.com/devsu/push-sender/releases/tag/1.0.2) (2016-02-18)
+
++ Fixed Java8 required binary.
+
