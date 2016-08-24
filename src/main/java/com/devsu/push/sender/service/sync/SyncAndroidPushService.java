@@ -79,11 +79,11 @@ public class SyncAndroidPushService extends SyncPushServiceBase {
 	}
 	
 	/*
-	 * @see com.rion18.pusher.service.sync.PushService#sendPush(java.lang.String, java.lang.String, java.util.Map, java.lang.String)
+	 * @see com.devsu.push.sender.service.sync.SyncPushService#sendPush(java.lang.String, java.lang.String, java.util.Map, java.lang.String)
 	 */
 	@Override
-	public boolean sendPush(final String title, final String message, 
-			final Map<String, String> additionalFields, final String token) throws IOException {
+	public boolean sendPush(final String title, final String message, final Map<String, String> additionalFields, 
+			final String token) throws IOException {
 		if (!validateSingleData(log, message, token)) {
 			return false;
 		}
@@ -92,8 +92,23 @@ public class SyncAndroidPushService extends SyncPushServiceBase {
 		return resultIsOk(result);
 	}
 	
+	/**
+	 * Sends a single push message.
+	 * @param msgBuilder The Message.Builder object.
+	 * @param token The push token.
+	 * @return <i>true</i> if the push message request was sent. 
+	 * @throws Exception
+	 */
+	public boolean sendPush(Message.Builder msgBuilder, String token) throws Exception {
+		if (!validateToken(log, token)) {
+			return false;
+		}
+		Result result = senderService.send(msgBuilder.build(), token, maxRetries);
+		return resultIsOk(result);
+	}
+	
 	/*
-	 * @see com.rion18.pusher.service.sync.PushService#sendPushInBulk(java.lang.String, java.lang.String, java.util.Map, java.lang.String[])
+	 * @see com.devsu.push.sender.service.sync.SyncPushService#sendPushInBulk(java.lang.String, java.lang.String, java.util.Map, java.lang.String[])
 	 */
 	@Override
 	public boolean sendPushInBulk(final String title, final String message, 
@@ -105,6 +120,23 @@ public class SyncAndroidPushService extends SyncPushServiceBase {
 		List<String[]> tokenLimitedList = ArrayUtil.splitArray(tokens, maxBulkSize);
 		for (String[] tokenArray: tokenLimitedList){
 			Message.Builder msgBuilder = generateBuilder(title, message, false, additionalFields);
+			MulticastResult result = senderService.send(msgBuilder.build(), Arrays.asList(tokenArray), maxRetries);
+			booleanResult = booleanResult ? resultIsOk(result) : false;
+		}
+		return booleanResult;
+	}
+	
+	/**
+	 * Sends a bulk push message.
+	 * @param msgBuilder The Message.Builder object.
+	 * @param token The push token.
+	 * @return <i>true</i> if the push message request was sent. 
+	 * @throws Exception
+	 */
+	public boolean sendPushInBulk(Message.Builder msgBuilder, String... tokens) throws Exception {
+		boolean booleanResult = true;
+		List<String[]> tokenLimitedList = ArrayUtil.splitArray(tokens, maxBulkSize);
+		for (String[] tokenArray: tokenLimitedList){
 			MulticastResult result = senderService.send(msgBuilder.build(), Arrays.asList(tokenArray), maxRetries);
 			booleanResult = booleanResult ? resultIsOk(result) : false;
 		}

@@ -14,19 +14,32 @@ public abstract class SyncPushServiceBase implements SyncPushService {
 	 * @param log The logger
 	 * @param message The push message content.
 	 * @param token The push token.
-	 * @return <i>true</i> if a message or token are null.
+	 * @return <i>true</i> if a message or token are not null.
 	 */
 	public boolean validateSingleData(Logger log, String message, String token) {
 		if (message == null) {
 			log.error("Message is null.");
 			return false;
 		}
-		if (token == null) {
-			log.error("Token is null.");
+		if (!validateToken(log, token)) {
 			return false;
 		}
 		if (!pushEnabled) {
 			log.debug("PUSH MOCK - " + token + ": " + message);
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Validates the Data for a single push message.
+	 * @param log The logger
+	 * @param token The push token.
+	 * @return <i>true</i> if a token is not null.
+	 */
+	public boolean validateToken(Logger log, String token) {
+		if (token == null) {
+			log.error("Token is null.");
 			return false;
 		}
 		return true;
@@ -51,7 +64,7 @@ public abstract class SyncPushServiceBase implements SyncPushService {
 	}
 
 	/*
-	 * @see com.rion18.pusher.service.sync.PushService#sendPush(java.lang.String, java.lang.String)
+	 * @see com.devsu.push.sender.service.sync.SyncPushService#sendPush(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public boolean sendPush(String message, String token) throws Exception{
@@ -59,7 +72,7 @@ public abstract class SyncPushServiceBase implements SyncPushService {
 	}
 	
 	/*
-	 * @see com.rion18.pusher.service.sync.PushService#sendPush(java.lang.String, java.lang.String, java.lang.String)
+	 * @see com.devsu.push.sender.service.sync.SyncPushService#sendPush(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public boolean sendPush(String title, String message, String token) throws Exception {
@@ -67,7 +80,7 @@ public abstract class SyncPushServiceBase implements SyncPushService {
 	}
 	
 	/*
-	 * @see com.rion18.pusher.service.sync.PushService#sendPushInBulk(java.lang.String, java.lang.String[])
+	 * @see com.devsu.push.sender.service.sync.SyncPushService#sendPushInBulk(java.lang.String, java.lang.String[])
 	 */
 	@Override
 	public boolean sendPushInBulk(String message, String... tokens) throws Exception {
@@ -75,7 +88,7 @@ public abstract class SyncPushServiceBase implements SyncPushService {
 	}
 	
 	/*
-	 * @see com.rion18.pusher.service.sync.PushService#sendPushInBulk(java.lang.String, java.lang.String, java.lang.String[])
+	 * @see com.devsu.push.sender.service.sync.SyncPushService#sendPushInBulk(java.lang.String, java.lang.String, java.lang.String[])
 	 */
 	@Override
 	public boolean sendPushInBulk(String title, String message, String... tokens) throws Exception {

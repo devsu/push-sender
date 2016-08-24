@@ -1,6 +1,6 @@
 # Push Sender #
 
-Push Sender is a Java library that allows sending push messages easily, based on the awesome libraries [gcm-server](https://github.com/theganyo/gcm-server) by [theganyo](https://github.com/theganyo) and [java-apns](https://github.com/notnoop/java-apns) by [notnoop](https://github.com/notnoop). Send push messages with one line of code, forget about the rest, and focus on making your application's business logic!
+Push Sender is a Java library that allows sending push messages easily, based on the awesome libraries [gcm-server](https://github.com/theganyo/gcm-server) by [theganyo](https://github.com/theganyo) and [java-apns](https://github.com/notnoop/java-apns) by [notnoop](https://github.com/notnoop). Be sure to check them out! Send push messages with one line of code, forget about the rest, and focus on making your application's business logic!
 
 ## Overview ###
 
@@ -10,7 +10,7 @@ Using Push Sender is very simple. You can import Push Sender on your POM file us
 	<dependency>
 		<groupId>com.devsu</groupId>
 		<artifactId>push-sender</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.3</version>
 	</dependency>
 ```
 

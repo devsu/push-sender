@@ -10,7 +10,7 @@ import com.devsu.push.sender.service.sync.SyncPushService;
 /**
  * Abstract base class for every async push service.
  */
-public abstract class AsyncPushServiceBase implements AsyncPushService  {
+public abstract class AsyncPushServiceBase implements AsyncPushService {
 	
 	/**
 	 * The push service that will be used in this async service.
@@ -33,7 +33,7 @@ public abstract class AsyncPushServiceBase implements AsyncPushService  {
 	}
 	
 	/* 
-	 * @see com.rion18.pusher.service.async.AsyncPushService#sendPush(java.lang.String, java.lang.String)
+	 * @see com.rion18.push.sender.service.async.AsyncPushService#sendPush(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void sendPush(String message, String token) {
@@ -41,7 +41,7 @@ public abstract class AsyncPushServiceBase implements AsyncPushService  {
 	}
 
 	/* 
-	 * @see com.rion18.pusher.service.async.AsyncPushService#sendPush(java.lang.String, java.lang.String, java.lang.String)
+	 * @see com.rion18.push.sender.service.async.AsyncPushService#sendPush(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void sendPush(String title, String message, String token) {
@@ -49,7 +49,7 @@ public abstract class AsyncPushServiceBase implements AsyncPushService  {
 	}
 	
 	/*
-	 * @see com.rion18.pusher.service.async.AsyncPushService#sendPush(java.lang.String, java.lang.String, java.util.Map, java.lang.String)
+	 * @see com.rion18.push.sender.service.async.AsyncPushService#sendPush(java.lang.String, java.lang.String, java.util.Map, java.lang.String)
 	 */
 	@Override
 	public void sendPush(final String title, final String message, 
@@ -74,7 +74,7 @@ public abstract class AsyncPushServiceBase implements AsyncPushService  {
 	}
 	
 	/* 
-	 * @see com.rion18.pusher.service.async.AsyncPushService#sendPushInBulk(java.lang.String, java.lang.String[])
+	 * @see com.rion18.push.sender.service.async.AsyncPushService#sendPushInBulk(java.lang.String, java.lang.String[])
 	 */
 	@Override
 	public void sendPushInBulk(String message, String... tokens) {
@@ -82,7 +82,7 @@ public abstract class AsyncPushServiceBase implements AsyncPushService  {
 	}
 	
 	/*
-	 * @see com.rion18.pusher.service.async.AsyncPushService#sendPushInBulk(java.lang.String, java.lang.String, java.lang.String[])
+	 * @see com.rion18.push.sender.service.async.AsyncPushService#sendPushInBulk(java.lang.String, java.lang.String, java.lang.String[])
 	 */
 	@Override
 	public void sendPushInBulk(String title, String message, String... tokens) {
@@ -90,7 +90,7 @@ public abstract class AsyncPushServiceBase implements AsyncPushService  {
 	}
 	
 	/*
-	 * @see com.rion18.pusher.service.async.AsyncPushService#sendPushInBulk(java.lang.String, java.lang.String, java.util.Map, java.lang.String[])
+	 * @see com.rion18.push.sender.service.async.AsyncPushService#sendPushInBulk(java.lang.String, java.lang.String, java.util.Map, java.lang.String[])
 	 */
 	@Override
 	public void sendPushInBulk(final String title, final String message, 
@@ -115,7 +115,7 @@ public abstract class AsyncPushServiceBase implements AsyncPushService  {
 	}
 	
 	/*
-	 * @see com.rion18.pusher.service.async.AsyncPushService#setPushCallback(com.rion18.pusher.callback.PushCallback)
+	 * @see com.rion18.push.sender.service.async.AsyncPushService#setPushCallback(com.rion18.push.sender.callback.PushCallback)
 	 */
 	@Override
 	public void setPushCallback(PushCallback pushCallback) {

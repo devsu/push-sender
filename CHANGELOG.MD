@@ -17,3 +17,8 @@ First release of the GCM Push Client.
 
 + Fixed Java8 required binary.
 
+## [1.0.3](https://github.com/devsu/push-sender/releases/tag/1.0.3) (2016-08-24)
+
++ PayloadBuilder can now be built externally.
++ Added validity checks where they were missing.
+

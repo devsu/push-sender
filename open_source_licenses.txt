@@ -1,4 +1,4 @@
-## theganyo/gcm-server
+## notnoop/java-apns
 
 Copyright 2009, Mahmood Ali.
 All rights reserved.

@@ -1,12 +1,18 @@
 package com.devsu.push.sender.service.async;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import com.devsu.push.sender.callback.PushCallback;
 import com.devsu.push.sender.service.sync.SyncAndroidPushService;
+import com.google.android.gcm.server.Message;
 
 /**
  * The async push service for Android (GCM).
  */
 public class AsyncAndroidPushService extends AsyncPushServiceBase {
+	
+	private static final String BUILDER_OBJECT = Message.Builder.class.getSimpleName();
 	
 	/**
 	 * @see com.devsu.push.sender.service.sync.SyncAndroidPushService#AndroidPushService(String)
@@ -22,6 +28,62 @@ public class AsyncAndroidPushService extends AsyncPushServiceBase {
 	 */
 	public AsyncAndroidPushService(String gcmApiKey, PushCallback pushCallback) {
 		super(new SyncAndroidPushService(gcmApiKey), pushCallback);
+	}
+	
+	/**
+	 * Sends a single push message.
+	 * @param msgBuilder The Message.Builder object.
+	 * @param token The push token.
+	 * @return <i>true</i> if the push message request was sent. 
+	 * @throws Exception
+	 */
+	public void sendPush(final Message.Builder msgBuilder, final String token) {
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(new Runnable() {
+		    @Override
+			public void run() {
+		    	try {
+		    		SyncAndroidPushService service = (SyncAndroidPushService) pushService;
+					boolean result = service.sendPush(msgBuilder, token);
+					if (pushCallback != null) {
+						pushCallback.onSingleSuccess(result, BUILDER_OBJECT, msgBuilder.build().toString(), null, token);
+					}
+		    	} catch (Exception e) {
+		    		if (pushCallback != null) {
+		    			pushCallback.onError(e);
+		    		}
+		    	}
+		    }
+		});
+		executorService.shutdown();
+	}
+	
+	/**
+	 * Sends a bulk push message.
+	 * @param msgBuilder The Message.Builder object.
+	 * @param token The push token.
+	 * @return <i>true</i> if the push message request was sent. 
+	 * @throws Exception
+	 */
+	public void sendPushInBulk(final Message.Builder msgBuilder, final String... tokens) {
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+		executorService.execute(new Runnable() {
+		    @Override
+			public void run() {
+		    	try {
+		    		SyncAndroidPushService service = (SyncAndroidPushService) pushService;
+					boolean result = service.sendPushInBulk(msgBuilder, tokens);
+					if (pushCallback != null) {
+						pushCallback.onBulkSuccess(result, BUILDER_OBJECT, msgBuilder.build().toString(), null, tokens);
+					}
+		    	} catch (Exception e) {
+		    		if (pushCallback != null) {
+		    			pushCallback.onError(e);
+		    		}
+		    	}
+		    }
+		});
+		executorService.shutdown();
 	}
 	
 	/**

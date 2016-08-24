@@ -1,6 +1,9 @@
 package com.devsu.push.sender.service.sync;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -15,6 +18,8 @@ import com.notnoop.exceptions.RuntimeIOException;
 
 public class SyncApplePushService extends SyncPushServiceBase {
 
+	private Map<String, Date> inactiveDevices;
+	
 	/**
 	 * Logger.
 	 */
@@ -33,7 +38,8 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	 * @throws RuntimeIOException
 	 * @throws InvalidSSLConfig
 	 */
-	public SyncApplePushService(String certificatePath, String certificatePassword, boolean useProductionServer) throws RuntimeIOException, InvalidSSLConfig {
+	public SyncApplePushService(String certificatePath, String certificatePassword, boolean useProductionServer) 
+			throws RuntimeIOException, InvalidSSLConfig {
 		setDefaultValues();
 		if (useProductionServer) {
 			setupProductionServer(certificatePath, certificatePassword);
@@ -48,14 +54,14 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	 */
 	private void setDefaultValues() {
 		pushEnabled = Defaults.PUSH_ENABLED;
+		inactiveDevices = new HashMap<String, Date>();
 	}
 	
 	/*
-	 * @see com.rion18.pusher.service.sync.PushService#sendPush(java.lang.String, java.lang.String, java.util.Map, java.lang.String)
+	 * @see com.devsu.push.sender.service.sync.SyncPushService#sendPush(java.lang.String, java.lang.String, java.util.Map, java.lang.String)
 	 */
 	@Override
-	public boolean sendPush(String title, String message, 
-			Map<String, String> additionalFields, String token) throws Exception {
+	public boolean sendPush(String title, String message, Map<String, String> additionalFields, String token) throws Exception {
 		if (!validateSingleData(log, message, token)) {
 			return false;
 		}
@@ -64,10 +70,27 @@ public class SyncApplePushService extends SyncPushServiceBase {
 		apnsService.push(token, msgBuilder.build());
 		apnsService.stop();
 		return true;
-	}	
+	}
+	
+	/**
+	 * Sends a single push message.
+	 * @param msgBuilder The PayloadBuilder object.
+	 * @param token The push token.
+	 * @return <i>true</i> if the push message request was sent. 
+	 * @throws Exception
+	 */
+	public boolean sendPush(PayloadBuilder msgBuilder, String token) throws Exception {
+		if (!validateToken(log, token)) {
+			return false;
+		}
+		apnsService.start();
+		apnsService.push(token, msgBuilder.build());
+		apnsService.stop();
+		return true;
+	}
 	
 	/*
-	 * @see com.rion18.pusher.service.sync.PushService#sendPushInBulk(java.lang.String, java.lang.String, java.util.Map, java.lang.String[])
+	 * @see com.devsu.push.sender.service.sync.SyncPushService#sendPushInBulk(java.lang.String, java.lang.String, java.util.Map, java.lang.String[])
 	 */
 	@Override
 	public boolean sendPushInBulk(String title, String message, 
@@ -78,7 +101,25 @@ public class SyncApplePushService extends SyncPushServiceBase {
 		apnsService.start();
 		PayloadBuilder msgBuilder = generateBuilder(title, message, additionalFields);
 		apnsService.push(Arrays.asList(tokens), msgBuilder.build());
-		apnsService.stop();
+		
+		inactiveDevices.putAll(apnsService.getInactiveDevices());
+
+		apnsService.stop(); 
+		return true;
+	}
+	
+	/**
+	 * Sends a bulk push message.
+	 * @param msgBuilder The PayloadBuilder object.
+	 * @param token The push token.
+	 * @return <i>true</i> if the push message request was sent. 
+	 * @throws Exception
+	 */
+	public boolean sendPushInBulk(PayloadBuilder msgBuilder, String... tokens) throws Exception {
+		apnsService.start();
+		apnsService.push(Arrays.asList(tokens), msgBuilder.build());
+		inactiveDevices.putAll(apnsService.getInactiveDevices());
+		apnsService.stop(); 
 		return true;
 	}
 	
@@ -123,6 +164,10 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	public void setupProductionServer(String certificatePath, String certificatePassword) throws RuntimeIOException, InvalidSSLConfig {
 		apnsService = APNS.newService().withCert(certificatePath, certificatePassword).withProductionDestination().build();
 		apnsService.stop();
+	}
+	
+	public Map<String, Date> getInactiveDevices() {
+		return Collections.unmodifiableMap(inactiveDevices);
 	}
 	
 	/**
