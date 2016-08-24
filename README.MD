@@ -81,6 +81,7 @@ public class MySender {
 
 ## Customizing ###
 + You can customize any data sent on your push message with a `Map<String, String>` that contains any key-value pair you want to send.
++ You can build your `Message.Builder` or `PayloadBuilder` objects externally and send them as push messages!
 + You can customize settings like max retries, collapse keys, production/sandbox environments, bulk size when sending simultaneous push messages on Android and more... 
 
 ## Authors ##
