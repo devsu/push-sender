@@ -97,7 +97,7 @@ public class SyncAndroidPushService extends SyncPushServiceBase {
 	 * @param msgBuilder The Message.Builder object.
 	 * @param token The push token.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	public boolean sendPush(Message.Builder msgBuilder, String token) throws Exception {
 		if (!validateToken(log, token)) {
@@ -129,9 +129,9 @@ public class SyncAndroidPushService extends SyncPushServiceBase {
 	/**
 	 * Sends a bulk push message.
 	 * @param msgBuilder The Message.Builder object.
-	 * @param token The push token.
+	 * @param tokens The push token.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	public boolean sendPushInBulk(Message.Builder msgBuilder, String... tokens) throws Exception {
 		boolean booleanResult = true;

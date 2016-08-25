@@ -15,7 +15,8 @@ public class AsyncAndroidPushService extends AsyncPushServiceBase {
 	private static final String BUILDER_OBJECT = Message.Builder.class.getSimpleName();
 	
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncAndroidPushService#AndroidPushService(String)
+	 * Single param constructor.
+	 * @param gcmApiKey The GCM API Key (also known as Sender ID).
 	 */
 	public AsyncAndroidPushService(String gcmApiKey){
 		super(new SyncAndroidPushService(gcmApiKey), null);
@@ -34,8 +35,6 @@ public class AsyncAndroidPushService extends AsyncPushServiceBase {
 	 * Sends a single push message.
 	 * @param msgBuilder The Message.Builder object.
 	 * @param token The push token.
-	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
 	 */
 	public void sendPush(final Message.Builder msgBuilder, final String token) {
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -61,9 +60,7 @@ public class AsyncAndroidPushService extends AsyncPushServiceBase {
 	/**
 	 * Sends a bulk push message.
 	 * @param msgBuilder The Message.Builder object.
-	 * @param token The push token.
-	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @param tokens The push tokens.
 	 */
 	public void sendPushInBulk(final Message.Builder msgBuilder, final String... tokens) {
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -87,56 +84,66 @@ public class AsyncAndroidPushService extends AsyncPushServiceBase {
 	}
 	
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncAndroidPushService#setMaxRetries(int)
+	 * Sets the number of max retries when sending a push message.
+	 * @param maxRetries The number of max retries when sending a push message.
 	 */
 	public void setMaxRetries(int maxRetries) {
 		((SyncAndroidPushService)pushService).setMaxRetries(maxRetries);
 	}
 
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncAndroidPushService#setMessageKey(java.lang.String)
+	 * Sets the message key that will store the key-value pair for the push message content.
+	 * @param messageKey The message key that will store the key-value pair for the push message content.
 	 */
 	public void setMessageKey(String messageKey) {
 		((SyncAndroidPushService)pushService).setMessageKey(messageKey);
 	}
 
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncAndroidPushService#setTitleKey(java.lang.String)
+	 * Sets the title key that will store the key-value pair for the push message title.
+	 * @param titleKey The title key that will store the key-value pair for the push message title.
 	 */
 	public void setTitleKey(String titleKey) {
 		((SyncAndroidPushService)pushService).setTitleKey(titleKey);
 	}
 
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncAndroidPushService#setMaxBulkSize(int)
+	 * Sets the quantity of push messages to be sent simultaneously on multicast requests. 
+	 * <b>NOTE:</b> As of December 2016, GCM states that there's a max limit of 1.000 simultaneous
+	 * registration ids on multicast requests. See the <i>registration_ids</i> parameter <a href="https://developers.google.com/cloud-messaging/http-server-ref">here</a>.
+	 * @param maxBulkSize The quantity of push messages to be sent simultaneously on multicast requests. Has a max value of 1000.
 	 */
 	public void setMaxBulkSize(int maxBulkSize) {
 		((SyncAndroidPushService)pushService).setMaxBulkSize(maxBulkSize);
 	}
 
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncAndroidPushService#setCollapseKeySingle(java.lang.String)
+	 * Sets the collapse key for identifying single messages.
+	 * @param collapseKeySingle The collapse key for identifying single messages.
 	 */
 	public void setCollapseKeySingle(String collapseKeySingle) {
 		((SyncAndroidPushService)pushService).setCollapseKeySingle(collapseKeySingle);
 	}
 	
-	/**	 
-	 * @see com.devsu.push.sender.service.sync.SyncAndroidPushService#setCollapseKeyBulk(java.lang.String)
+	/**
+	 * Sets the collapse key for identifying bulk messages.
+	 * @param collapseKeyBulk The collapse key for identifying bulk messages.
 	 */
 	public void setCollapseKeyBulk(String collapseKeyBulk) {
 		((SyncAndroidPushService)pushService).setCollapseKeyBulk(collapseKeyBulk);
 	}
 
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncAndroidPushService#setGcmApiKey(java.lang.String)
+	 * Sets the GCM API Key (also known as Sender ID).
+	 * @param gcmApiKey The GCM API Key (also known as Sender ID).
 	 */
 	public void setGcmApiKey(String gcmApiKey) {
 		((SyncAndroidPushService)pushService).setGcmApiKey(gcmApiKey);
 	}
 	
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncPushServiceBase#setPushEnabled(boolean)
+	 * Enables/disables this service.
+	 * @param pushEnabled The parameter that enables/disables this service.
 	 */
 	public void setPushEnabled(boolean pushEnabled) {
 		((SyncAndroidPushService)pushService).setPushEnabled(pushEnabled);

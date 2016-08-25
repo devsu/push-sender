@@ -11,6 +11,7 @@ public class ArrayUtil {
 
 	/**
 	 * Splits an array in a list of subarrays of size <i>maxSubArraySize</i>.
+	 * @param <T> The class of the elements in the array.
 	 * @param elementArray The array to be split.
 	 * @param maxSubArraySize The final size of the subarrays.
 	 * @return The list containing the subarrays.

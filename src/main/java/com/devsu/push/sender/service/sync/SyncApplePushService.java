@@ -35,8 +35,8 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	 * @param certificatePath The path of the p12 certificate file.
 	 * @param certificatePassword The password for the p12 certificate.
 	 * @param useProductionServer Indicates if the services uses a Production environment or a Sandbox environment.
-	 * @throws RuntimeIOException
-	 * @throws InvalidSSLConfig
+	 * @throws RuntimeIOException An IO exception.
+	 * @throws InvalidSSLConfig Certificates are corrupted, wrong or password is wrong.
 	 */
 	public SyncApplePushService(String certificatePath, String certificatePassword, boolean useProductionServer) 
 			throws RuntimeIOException, InvalidSSLConfig {
@@ -77,7 +77,7 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	 * @param msgBuilder The PayloadBuilder object.
 	 * @param token The push token.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	public boolean sendPush(PayloadBuilder msgBuilder, String token) throws Exception {
 		if (!validateToken(log, token)) {
@@ -111,9 +111,9 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	/**
 	 * Sends a bulk push message.
 	 * @param msgBuilder The PayloadBuilder object.
-	 * @param token The push token.
+	 * @param tokens The push token.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	public boolean sendPushInBulk(PayloadBuilder msgBuilder, String... tokens) throws Exception {
 		apnsService.start();
@@ -146,8 +146,8 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	 * Sets up the APNS Sandbox environment.
 	 * @param certificatePath The path of the p12 certificate file.
 	 * @param certificatePassword The password for the p12 certificate.
-	 * @throws RuntimeIOException
-	 * @throws InvalidSSLConfig
+	 * @throws RuntimeIOException An IO exception.
+	 * @throws InvalidSSLConfig Certificates are corrupted, wrong or password is wrong.
 	 */
 	public void setupDevelopmentServer(String certificatePath, String certificatePassword) throws RuntimeIOException, InvalidSSLConfig {
 		apnsService = APNS.newService().withCert(certificatePath, certificatePassword).withSandboxDestination().build();
@@ -158,8 +158,8 @@ public class SyncApplePushService extends SyncPushServiceBase {
 	 * Sets up the APNS Production environment.
 	 * @param certificatePath The path of the p12 certificate file.
 	 * @param certificatePassword The password for the p12 certificate.
-	 * @throws RuntimeIOException
-	 * @throws InvalidSSLConfig
+	 * @throws RuntimeIOException An IO exception.
+	 * @throws InvalidSSLConfig Certificates are corrupted, wrong or password is wrong.
 	 */
 	public void setupProductionServer(String certificatePath, String certificatePassword) throws RuntimeIOException, InvalidSSLConfig {
 		apnsService = APNS.newService().withCert(certificatePath, certificatePassword).withProductionDestination().build();

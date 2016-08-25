@@ -19,7 +19,12 @@ public class AsyncApplePushService extends AsyncPushServiceBase {
 	private static final String BUILDER_OBJECT = PayloadBuilder.class.getSimpleName();
 
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncApplePushService#ApplePushService(String, String, boolean)
+	 * 3 param constructor.
+	 * @param certificatePath The path of the p12 certificate file.
+	 * @param certificatePassword The password for the p12 certificate.
+	 * @param useProductionServer Indicates if the services uses a Production environment or a Sandbox environment.
+	 * @throws RuntimeIOException An IO exception.
+	 * @throws InvalidSSLConfig Certificates are corrupted, wrong or password is wrong.
 	 */
 	public AsyncApplePushService(String certificatePath, String certificatePassword, boolean useProductionServer)
 			throws RuntimeIOException, InvalidSSLConfig {
@@ -32,8 +37,8 @@ public class AsyncApplePushService extends AsyncPushServiceBase {
 	 * @param certificatePassword The password for the p12 certificate.
 	 * @param useProductionServer Indicates if the services uses a Production environment or a Sandbox environment.
 	 * @param pushCallback The push callback.
-	 * @throws RuntimeIOException
-	 * @throws InvalidSSLConfig
+	 * @throws RuntimeIOException An IO exception.
+	 * @throws InvalidSSLConfig Certificates are corrupted, wrong or password is wrong.
 	 */
 	public AsyncApplePushService(String certificatePath, String certificatePassword, boolean useProductionServer, PushCallback pushCallback) 
 			throws RuntimeIOException, InvalidSSLConfig {
@@ -44,8 +49,6 @@ public class AsyncApplePushService extends AsyncPushServiceBase {
 	 * Sends a single push message.
 	 * @param msgBuilder The PayloadBuilder object.
 	 * @param token The push token.
-	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
 	 */
 	public void sendPush(final PayloadBuilder msgBuilder, final String token) {
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -71,9 +74,7 @@ public class AsyncApplePushService extends AsyncPushServiceBase {
 	/**
 	 * Sends a bulk push message.
 	 * @param msgBuilder The Message.Builder object.
-	 * @param token The push token.
-	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @param tokens The push token.
 	 */
 	public void sendPushInBulk(final PayloadBuilder msgBuilder, final String... tokens) {
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -97,26 +98,39 @@ public class AsyncApplePushService extends AsyncPushServiceBase {
 	}
 	
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncApplePushService#setupDevelopmentServer(java.lang.String, java.lang.String)
+	 * Sets up the APNS Sandbox environment.
+	 * @param certificatePath The path of the p12 certificate file.
+	 * @param certificatePassword The password for the p12 certificate.
+	 * @throws RuntimeIOException An IO exception.
+	 * @throws InvalidSSLConfig Certificates are corrupted, wrong or password is wrong.
 	 */
 	public void setupDevelopmentServer(String certificatePath, String certificatePassword) throws RuntimeIOException, InvalidSSLConfig {
 		((SyncApplePushService)pushService).setupDevelopmentServer(certificatePath, certificatePassword);
 	}
 	
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncApplePushService#setupProductionServer(java.lang.String, java.lang.String)
+	 * Sets up the APNS Production environment.
+	 * @param certificatePath The path of the p12 certificate file.
+	 * @param certificatePassword The password for the p12 certificate.
+	 * @throws RuntimeIOException An IO exception.
+	 * @throws InvalidSSLConfig Certificates are corrupted, wrong or password is wrong.
 	 */
 	public void setupProductionServer(String certificatePath, String certificatePassword) throws RuntimeIOException, InvalidSSLConfig {
 		((SyncApplePushService)pushService).setupProductionServer(certificatePath, certificatePassword);
 	}
 	
 	/**
-	 * @see com.devsu.push.sender.service.sync.SyncPushServiceBase#setPushEnabled(boolean)
+	 * Enables/disables this service.
+	 * @param pushEnabled The parameter that enables/disables this service.
 	 */
 	public void setPushEnabled(boolean pushEnabled) {
 		((SyncApplePushService)pushService).setPushEnabled(pushEnabled);
 	}
 	
+	/**
+	 * Gets a map of inactive devices.
+	 * @return a map of inactive devices.
+	 */
 	public Map<String, Date> getInactiveDevices() {
 		return ((SyncApplePushService)pushService).getInactiveDevices();
 	}

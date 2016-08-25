@@ -9,7 +9,7 @@ public interface SyncPushService {
 	 * @param message The push message content.
 	 * @param token The push token.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	boolean sendPush(String message, String token) throws Exception;
 
@@ -19,7 +19,7 @@ public interface SyncPushService {
 	 * @param message The push message content.
 	 * @param token The push token.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	boolean sendPush(String title, String message, String token) throws Exception;
 
@@ -30,7 +30,7 @@ public interface SyncPushService {
 	 * @param additionalFields The additional fields sent on the push message.
 	 * @param token The push token.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	boolean sendPush(String title, String message, Map<String, String> additionalFields, String token) throws Exception;
 
@@ -39,7 +39,7 @@ public interface SyncPushService {
 	 * @param message The push message content.
 	 * @param tokens The push tokens.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	boolean sendPushInBulk(String message, String... tokens) throws Exception;
 
@@ -49,7 +49,7 @@ public interface SyncPushService {
 	 * @param message The push message content.
 	 * @param tokens The push tokens.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	boolean sendPushInBulk(String title, String message, String... tokens) throws Exception;
 
@@ -60,7 +60,7 @@ public interface SyncPushService {
 	 * @param additionalFields The additional fields sent on the push message.
 	 * @param tokens The push tokens.
 	 * @return <i>true</i> if the push message request was sent. 
-	 * @throws Exception
+	 * @throws Exception Any exception that may arise.
 	 */
 	boolean sendPushInBulk(String title, String message, Map<String, String> additionalFields, String... tokens) throws Exception;
 }
